@@ -1,28 +1,29 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Username from "./components/Username.jsx"
-import Reset from "./components/Reset.jsx"
-import Register from "./components/Register.jsx"
-import Recovery from "./components/Recovery.jsx"
-import Profile from "./components/Profile.jsx"
-import Password from "./components/Password.jsx"
-// import PageNotFound from "./components/PageNotFound.jsx"
+import UserProfilePage from "./pages/UserProfilePage.jsx"
+import LoginPage from "./pages/LoginPage.jsx"
+import RegisterPage from "./pages/RegisterPage.jsx"
+import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx"
+import ResetPasswordPage from "./pages/ResetPasswordPage.jsx"
+import VerifyOTPPage from "./pages/VerifyOTPPage.jsx"
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     return (
-        <>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Username />}></Route>
-                    <Route path="/password" element={<Password />}></Route>
-                    <Route path="/recovery" element={<Recovery />}></Route>
-                    <Route path="/reset" element={<Reset />}></Route>
-                    <Route path="/register" element={<Register />}></Route>
-                    <Route path="/profile" element={<Profile />}></Route>
-                    <Route path="*" element={"Page not found"}></Route>
-                </Routes>
-            </BrowserRouter>
-        </>
-    )
+		<>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/login" element={<LoginPage />}></Route>
+					<Route path="/register" element={<RegisterPage />}></Route>
+					<Route path="/" element={<UserProfilePage />}></Route>
+					<Route path="/forgotpassword" element={<ForgotPasswordPage />}></Route>
+					<Route path="/verifyotppage" element={<VerifyOTPPage />}></Route>
+					<Route path="/resetpassword" element={<ResetPasswordPage />}></Route>
+				</Routes>
+			</BrowserRouter>
+			<ToastContainer position="bottom-left" autoClose={3000} hideProgressBar={true} theme="dark"/>
+		</>
+	);
 }
 
 export default App
