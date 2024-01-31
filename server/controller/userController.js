@@ -157,6 +157,8 @@ export const generateOTP = async (req, res) => {
 		specialChars: false,
 	});
 
+	console.log("Session data : ", req.session);
+
 	// Sending an email
 	const transporter = nodemailer.createTransport({
 		service: "gmail",
@@ -213,7 +215,6 @@ export const verifyOTP = async (req, res) => {
 
 	// Verifying OTP
 	if (!(parseInt(code) === parseInt(req.session.OTP))) {
-		console.log(code, req.session.OTP);
 		return res.status(400).json({ error: "Invalid OTP" });
 	}
 
@@ -227,6 +228,8 @@ export const verifyOTP = async (req, res) => {
 // PUT:http://localhost:8080/user/resetPassword
 export const resetPassword = async (req, res) => {
 	const { password } = req.body;
+
+	console.log("Session data : ", req.session);
 
 	try {
 		// Checking if the session is on or off

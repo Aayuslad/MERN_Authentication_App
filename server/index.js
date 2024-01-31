@@ -12,6 +12,9 @@ const app = express();
 // Server connection
 connect()
 
+// Set trust proxy
+app.set("trust proxy", 1);
+
 // Middlewares
 app.use(
 	cors({
@@ -29,6 +32,11 @@ app.use(session({
 	secret: process.env.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: true,
+	cookie : {
+		secure: false,
+		httpOnly: true,
+		sameSite: "none"
+	}
 })) 
 
 // API endpoints
