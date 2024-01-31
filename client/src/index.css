@@ -291,7 +291,7 @@ input[type="file"] {
 
 	.glass {
 		width: 100%;
-		height: 100vh;
+		height: 100dvh;
 		border-radius: 0;
 		padding-bottom: 100px;
 		margin-top: 0;
