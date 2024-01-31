@@ -40,9 +40,9 @@ app.use(
 			autoRemoveInterval: 5, // In minutes. Default
 		}),
 		cookie: {
-			// secure: true,
+			secure: true,
 			httpOnly: true,
-			// sameSite: "none",
+			sameSite: "none",
 		},
 	}),
 ); 
