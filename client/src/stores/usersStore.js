@@ -28,7 +28,7 @@ const usersStore = create((set) => ({
 	login: async (values, navigate) => {
 		try {
 			await toast.promise(axios.post("/user/login", values), {
-				promise: "Processing, please wait...",
+				pending: "Processing, please wait...",
 				success: "successfully Logged in",
 			});
 			navigate("/");
@@ -43,7 +43,7 @@ const usersStore = create((set) => ({
 	logout: async (navigate) => {
 		try {
 			await toast.promise(axios.get("/user/logout"), {
-				promise: "Processing, please wait...",
+				pending: "Processing, please wait...",
 				success: "Successfully logged out",
 			});
 			navigate("/login");
@@ -109,7 +109,7 @@ const usersStore = create((set) => ({
 
 		try {
 			await toast.promise(axios.get(`/user/verifyOtp?code=${OTP}`), {
-				promise: "Processing, please wait...",
+				pending: "Processing, please wait...",
 				success: "OTP verification successful",
 			});
 			navigate("/resetpassword");
@@ -122,7 +122,7 @@ const usersStore = create((set) => ({
 	updatePassword: async (values, navigate) => {
 		try {
 			await toast.promise(axios.put("/user/resetPassword", values), {
-				promise: "Processing, please wait...",
+				pending: "Processing, please wait...",
 				success: "Password updated",
 			});
 			navigate("/login");
