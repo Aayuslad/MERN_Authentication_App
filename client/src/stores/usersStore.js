@@ -68,8 +68,10 @@ const usersStore = create((set) => ({
 	updateUserDetails: async (values) => {
 
 		try {
-			const res = await axios.put("/user/updateUser", values);
-			toast.success(res.data.message);
+			await toast.promise(axios.put("/user/updateUser", values), {
+				pending : "Updating user data...",
+				success : "User updated successfully",
+			});
 		} catch (error) {
 			if (error.response) {
 				if (error.response.status === 413) {
