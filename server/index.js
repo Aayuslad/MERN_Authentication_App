@@ -37,12 +37,12 @@ app.use(
 		store: MongoStore.create({
 			mongoUrl: process.env.DB_URL,
 			autoRemove: "interval",
-			autoRemoveInterval: 10, // In minutes. Default
+			autoRemoveInterval: 5, // In minutes. Default
 		}),
 		cookie: {
-			secure: false,
+			// secure: true,
 			httpOnly: true,
-			sameSite: "none",
+			// sameSite: "none",
 		},
 	}),
 ); 

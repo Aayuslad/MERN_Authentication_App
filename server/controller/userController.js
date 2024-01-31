@@ -243,6 +243,7 @@ export const resetPassword = async (req, res) => {
 		await User.updateOne({ email: req.session.email }, { password: hashedPassword });
 		req.session.resetSession = false;
 		req.session.email = "";
+		req.session.destroy();
 
 		return res.status(200).json({ message: "Password updated successfully" });
 	} catch (error) {	
