@@ -208,6 +208,9 @@ export const generateOTP = async (req, res) => {
 export const verifyOTP = async (req, res) => {
 	const { code } = req.query;
 
+	console.log("Session data : ", req.session);
+	console.log("Recived OTP : ", code);
+
 	// Verifying OTP
 	if (!(parseInt(code) === parseInt(req.session.OTP))) {
 		console.log(code, req.session.OTP);
