@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { loginFormValidation } from "../helper/validate";
 import user from "../../public/icons/user.svg";
+import password from "../../public/icons/password.svg"
 import google_logo from "../../public/images/google_logo.png";
 import github_logo from "../../public/images/github_logo.png";
 import usersStore from "../stores/usersStore.js";
