@@ -157,8 +157,6 @@ export const generateOTP = async (req, res) => {
 		specialChars: false,
 	});
 
-	console.log("Session data : ", req.session);
-
 	// Sending an email
 	const transporter = nodemailer.createTransport({
 		service: "gmail",
@@ -210,9 +208,6 @@ export const generateOTP = async (req, res) => {
 export const verifyOTP = async (req, res) => {
 	const { code } = req.query;
 
-	console.log("Session data : ", req.session);
-	console.log("Recived OTP : ", code);
-
 	// Verifying OTP
 	if (!(parseInt(code) === parseInt(req.session.OTP))) {
 		return res.status(400).json({ error: "Invalid OTP" });
@@ -229,8 +224,6 @@ export const verifyOTP = async (req, res) => {
 export const resetPassword = async (req, res) => {
 	const { password } = req.body;
 
-	console.log("Session data : ", req.session);
-
 	try {
 		// Checking if the session is on or off
 		if (!req.session.resetSession) return res.status(400).json({ error: "Session expired" });
@@ -246,7 +239,7 @@ export const resetPassword = async (req, res) => {
 		req.session.destroy();
 
 		return res.status(200).json({ message: "Password updated successfully" });
-	} catch (error) {	
+	} catch (error) {
 		// console.log("Error while updating password : ", error);
 		return res.status(400).json({ error: "Error while updating the password" });
 	}

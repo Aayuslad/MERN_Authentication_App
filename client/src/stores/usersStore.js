@@ -9,8 +9,10 @@ const usersStore = create((set) => ({
 
 	register: async (values, navigate) => {
 		try {
-			const res = await axios.post("/user/register", values);
-			toast.success(res.data.message);
+			await toast.promise(axios.post("/user/register", values), {
+				pending: "Processing, please wait...",
+				success: "Successfully registered",
+			});
 			navigate("/login");
 		} catch (error) {
 			if (error.response) {
@@ -25,8 +27,10 @@ const usersStore = create((set) => ({
 
 	login: async (values, navigate) => {
 		try {
-			const res = await axios.post("/user/login", values);
-			toast.success(res.data.message);
+			await toast.promise(axios.post("/user/login", values), {
+				promise: "Processing, please wait...",
+				success: "successfully Logged in",
+			});
 			navigate("/");
 		} catch (error) {
 			if (error.response) {
@@ -38,8 +42,10 @@ const usersStore = create((set) => ({
 
 	logout: async (navigate) => {
 		try {
-			const res = await axios.get("/user/logout");
-			toast.success(res.data.message);
+			await toast.promise(axios.get("/user/logout"), {
+				promise: "Processing, please wait...",
+				success: "Successfully logged out",
+			});
 			navigate("/login");
 		} catch (error) {
 			if (error.response) {
@@ -51,9 +57,9 @@ const usersStore = create((set) => ({
 
 	getUserDetails: async (navigate) => {
 		try {
-			set({ isLoading : true })
+			set({ isLoading: true });
 			const res = await axios.get("/user/profile");
-			set({ isLoading : false})
+			set({ isLoading: false });
 			return res.data;
 		} catch (error) {
 			set({ isLoading: false });
@@ -66,11 +72,10 @@ const usersStore = create((set) => ({
 	},
 
 	updateUserDetails: async (values) => {
-
 		try {
 			await toast.promise(axios.put("/user/updateUser", values), {
-				pending : "Updating user data...",
-				success : "User updated successfully",
+				pending: "Updating user data...",
+				success: "User updated successfully",
 			});
 		} catch (error) {
 			if (error.response) {
@@ -103,8 +108,10 @@ const usersStore = create((set) => ({
 		const OTP = values.OTP.reduce((otp, digit) => otp + digit, "");
 
 		try {
-			const res = await axios.get(`/user/verifyOtp?code=${OTP}`);
-			toast.success(res.data.message);
+			await toast.promise(axios.get(`/user/verifyOtp?code=${OTP}`), {
+				promise: "Processing, please wait...",
+				success: "OTP verification successful",
+			});
 			navigate("/resetpassword");
 		} catch (error) {
 			if (error.response) return toast.error(error.response.data.error);
@@ -114,8 +121,10 @@ const usersStore = create((set) => ({
 
 	updatePassword: async (values, navigate) => {
 		try {
-			const res = await axios.put("/user/resetPassword", values);
-			toast.success(res.data.message);
+			await toast.promise(axios.put("/user/resetPassword", values), {
+				promise: "Processing, please wait...",
+				success: "Password updated",
+			});
 			navigate("/login");
 		} catch (error) {
 			if (error.response) return toast.error(error.response.data.error);
