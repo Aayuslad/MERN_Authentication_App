@@ -70,7 +70,7 @@ export default function VerifyOTP() {
 						</div>
 					</div>
 
-					<p style={color: ""}>If not found, please check spam folder.</p>
+					<p>If not found, please check spam folder.</p>
 
 					<div className="butons">
 						<button className="btn" type="submit">
