@@ -94,7 +94,7 @@ export default function LoginForm() {
 				<div className="form_footer">
 					Not a member?{" "}
 					<Link className="link" to="/register">
-						Ragister
+						Register
 					</Link>
 				</div>
 			</div>

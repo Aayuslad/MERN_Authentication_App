@@ -84,7 +84,7 @@ const usersStore = create((set) => ({
 				}
 				return toast.error(error.response.error);
 			}
-			toast.error("Error while updateging data");
+			toast.error("Error while updating data");
 		}
 	},
 
