@@ -6,6 +6,7 @@ import connect from "./databse/connection.js"
 import authRoute from './router/authRoute.js';
 import 'dotenv/config'
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
 const PORT = process.env.PORT || 8080;
 const app = express();
 
@@ -28,16 +29,23 @@ app.use(morgan("tiny"))
 app.disable("x-powerd-by")
 
 // Express session
-app.use(session({
-	secret: process.env.SESSION_SECRET,
-	resave: false,
-	saveUninitialized: true,
-	cookie : {
-		secure: false,
-		httpOnly: true,
-		sameSite: "none"
-	}
-})) 
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET,
+		resave: false,
+		saveUninitialized: true,
+		store: MongoStore.create({
+			mongoUrl: process.env.DB_URL,
+			autoRemove: "interval",
+			autoRemoveInterval: 10, // In minutes. Default
+		}),
+		cookie: {
+			secure: false,
+			httpOnly: true,
+			sameSite: "none",
+		},
+	}),
+); 
 
 // API endpoints
 app.get("/", (req, res) => {
