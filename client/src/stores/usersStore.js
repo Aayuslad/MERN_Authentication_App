@@ -66,6 +66,7 @@ const usersStore = create((set) => ({
 	},
 
 	updateUserDetails: async (values) => {
+
 		try {
 			const res = await axios.put("/user/updateUser", values);
 			toast.success(res.data.message);

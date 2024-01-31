@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { forgotPasswordValidation } from "../helper/validate";
+import email from "../../public/icons/email.svg";
 import usersStore from "../stores/usersStore";
 
 export default function ForgotPassword() {
@@ -33,7 +34,7 @@ export default function ForgotPassword() {
 					<div className="inputs">
 						<div className="input">
 							<div className="icon">
-								<img src="../../public/icons/email.svg" alt="" />
+								<img src={email} alt="" />
 							</div>
 							<input
 								type="text"

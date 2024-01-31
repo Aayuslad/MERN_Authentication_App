@@ -4,6 +4,10 @@ import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { profileUpdateValidation } from "../helper/validate";
 import avatar from "../../public/images/profile.png";
+import user from "../../public/icons/user.svg"
+import email from "../../public/icons/email.svg"
+import address from "../../public/icons/address.svg"
+import phone from "../../public/icons/phone.svg"
 import usersStore from "../stores/usersStore";
 import convertToBase64 from "../helper/convert";
 import LoadingPage from "../pages/LoadingPage";
@@ -68,7 +72,7 @@ export default function Profile() {
 						<div className="row">
 							<div className="input">
 								<div className="icon">
-									<img src="../../public/icons/user.svg" alt="" />
+									<img src={user} alt="" />
 								</div>
 								<input
 									type="text"
@@ -79,7 +83,7 @@ export default function Profile() {
 							</div>
 							<div className="input">
 								<div className="icon">
-									<img src="../../public/icons/user.svg" alt="" />
+									<img src={user} alt="" />
 								</div>
 								<input
 									type="text"
@@ -93,7 +97,7 @@ export default function Profile() {
 						<div className="row">
 							<div className="input">
 								<div className="icon">
-									<img src="../../public/icons/phone.svg" alt="" />
+									<img src={phone} alt="" />
 								</div>
 								<input
 									type="text"
@@ -104,7 +108,7 @@ export default function Profile() {
 							</div>
 							<div className="input">
 								<div className="icon">
-									<img src="../../public/icons/email.svg" alt="" />
+									<img src={email} alt="" />
 								</div>
 								<input
 									type="text"
@@ -118,7 +122,7 @@ export default function Profile() {
 						<div className="row">
 							<div className="input long">
 								<div className="icon">
-									<img src="../../public/icons/address.svg" alt="" />
+									<img src={address} alt="" />
 								</div>
 								<input
 									type="text"

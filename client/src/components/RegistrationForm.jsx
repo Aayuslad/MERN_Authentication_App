@@ -4,6 +4,11 @@ import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { registerFormValidation } from "../helper/validate";
 import avatar from "../../public/images/profile.png";
+import user from "../../public/icons/user.svg";
+import email from "../../public/icons/email.svg";
+import google_logo from "../../public/images/google_logo.png";
+import github_logo from "../../public/images/github_logo.png";
+import password from "../../public/icons/password.svg";
 import usersStore from "../stores/usersStore";
 import convertToBase64 from "../helper/convert";
 
@@ -53,7 +58,7 @@ export default function RegisterForm() {
 					<div className="inputs">
 						<div className="input">
 							<div className="icon">
-								<img src="../../public/icons/email.svg" alt="" />
+								<img src={email} alt="" />
 							</div>
 							<input
 								type="email"
@@ -64,7 +69,7 @@ export default function RegisterForm() {
 						</div>
 						<div className="input">
 							<div className="icon">
-								<img src="../../public/icons/user.svg" alt="" />
+								<img src={user} alt="" />
 							</div>
 							<input
 								type="text"
@@ -75,7 +80,7 @@ export default function RegisterForm() {
 						</div>
 						<div className="input">
 							<div className="icon">
-								<img src="../../public/icons/password.svg" alt="" />
+								<img src={password} alt="" />
 							</div>
 							<input
 								type="password"
@@ -101,13 +106,13 @@ export default function RegisterForm() {
 					<div className="buttons continue-w">
 						<button className="btn continue-w-google" type="button">
 							<div className="logo">
-								<img src="../../public/images/google_logo.png" alt="" />
+								<img src={google_logo} alt="" />
 							</div>
 							<b>Coninue with Google</b>
 						</button>
 						<button className="btn continue-w-github" type="button">
 							<div className="logo">
-								<img src="../../public/images/github_logo.png" alt="" />
+								<img src={github_logo} alt="" />
 							</div>
 							<b>Coninue with GitHub</b>
 						</button>

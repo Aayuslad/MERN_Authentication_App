@@ -2,6 +2,7 @@ import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { ResetPasswordValidation } from "../helper/validate";
 import { useNavigate } from "react-router-dom";
+import password from "../../public/icons/password.svg";
 import usersStore from "../stores/usersStore";
 
 export default function ResetPassword() {
@@ -34,7 +35,7 @@ export default function ResetPassword() {
 					<div className="inputs">
 						<div className="input">
 							<div className="icon">
-								<img src="../../public/icons/password.svg" alt="" />
+								<img src={password} alt="" />
 							</div>
 							<input
 								type="password"
@@ -45,7 +46,7 @@ export default function ResetPassword() {
 						</div>
 						<div className="input">
 							<div className="icon">
-								<img src="../../public/icons/password.svg" alt="" />
+								<img src={password} alt="" />
 							</div>
 							<input
 								type="text"
