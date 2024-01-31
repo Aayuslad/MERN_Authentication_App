@@ -50,7 +50,6 @@ export default function VerifyOTP() {
 				<div className="form_header">
 					<h2>OTP Verification</h2>
 					<p>One Time Password (OTP) has been sent via Email to {store.verificationEmail}.</p>
-					<p>If not found, please check spam folder.</p>
 				</div>
 
 				<form className="form_body" onSubmit={formik.handleSubmit}>
@@ -70,6 +69,8 @@ export default function VerifyOTP() {
 							})}
 						</div>
 					</div>
+
+					<p style={color: ""}>If not found, please check spam folder.</p>
 
 					<div className="butons">
 						<button className="btn" type="submit">

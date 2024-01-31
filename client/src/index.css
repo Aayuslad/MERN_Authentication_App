@@ -54,7 +54,7 @@ body {
 	text-align: center;
 }
 
-.form_header p {
+.glass p {
 	font-size: 0.9rem;
 	letter-spacing: 1px;
 	color: #313131;
@@ -364,16 +364,17 @@ input[type="file"] {
 
 @media screen and (max-width: 600px) {
 	.ForgotPasswordPage .glass,
-	.ResetPasswordPage .glass {
+	.ResetPasswordPage .glass,
+	.VerifyOTPPage .glass {
 		padding-bottom: 300px;
 	}
 
-	.ForgotPasswordPage .glass h2 {
+	.ForgotPasswordPage .glass h2, .VerifyOTPPage .glass h2 {
 		text-align: start;
 		font-size: 2rem;
 	}
 
-	.ForgotPasswordPage .glass .form_header p {
+	.ForgotPasswordPage .glass .form_header p, .VerifyOTPPage .glass .form_header p {
 		text-align: start;
 	}
 
