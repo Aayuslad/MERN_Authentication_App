@@ -1,7 +1,16 @@
 export default function LoadingPage() {
     return (
-        <div className="LoadingPage">
-             <h1>Loading...</h1>
-        </div>
-    )
+		<div className="LoadingPage">
+			<div class="lds-roller">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+	);
 }
