@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import connect from "./databse/connection.js"
+import connect from "./database/connection.js"
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import 'dotenv/config'
