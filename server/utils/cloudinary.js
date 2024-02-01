@@ -22,6 +22,7 @@ const uploadOnCloudinary = async (localFilePath) => {
 		return res;
 	} catch (error) {
 		// Deleting temporaray saved file from server
+		console.log("Error while uploding file");
 		fs.unlinkSync(localFilePath);
 		return null;
 	}

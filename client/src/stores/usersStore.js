@@ -9,10 +9,11 @@ const usersStore = create((set) => ({
 
 	register: async (values, navigate) => {
 		try {
-			await toast.promise(axios.post("/user/register", values), {
+			const res = await toast.promise(axios.post("/user/register", values), {
 				pending: "Processing, please wait...",
 				success: "Successfully registered",
 			});
+			console.log("Registerd, profile pic res : ", res.data);
 			navigate("/login");
 		} catch (error) {
 			if (error.response) {

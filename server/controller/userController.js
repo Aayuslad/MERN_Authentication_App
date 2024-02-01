@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import otpGenerator from "otp-generator";
 import User from "../model/user.model.js";
+import uploadOnCloudinary from "../utils/cloudinary.js"
 
 // POST: http://localhost:8080/user/register
 // body : {
@@ -13,6 +14,10 @@ import User from "../model/user.model.js";
 // }
 export const register = async (req, res) => {
 	const { username, password, email, profile } = req.body;
+	const profilePic = req.file?.path;
+	let responce;
+
+	console.log("req.file : ", req.file);
 
 	try {
 		// Check if the username already exists
@@ -23,13 +28,20 @@ export const register = async (req, res) => {
 		const userByEmail = await User.findOne({ email });
 		if (userByEmail) return res.status(400).json({ error: "User already exists with this email" });
 
+		// if (profilePic) {
+		// 	responce = await uploadOnCloudinary(profilePic);
+		// }
+
 		// Hashing password
 		const salt = await bcrypt.genSalt(10);
 		const hashedPassword = await bcrypt.hash(password, salt);
 
 		// creating new user
 		await User.create({ username, password: hashedPassword, email, profile });
-		res.status(201).json({ message: "Successfully registered" });
+		res.status(201).json({
+			message: "Successfully registered",
+			responce: `this is responce : ${responce}`,
+		});
 	} catch (error) {
 		// console.log("Error while logging in : ", error);
 		res.status(500).json({ error: "Internal server error" });
