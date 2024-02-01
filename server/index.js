@@ -27,7 +27,8 @@ app.use(
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan("tiny"))
-app.disable("x-powerd-by")
+// app.disable("x-powerd-by")
+app.use(express.urlencoded({ extended: true }));
 
 // Express session
 app.use(

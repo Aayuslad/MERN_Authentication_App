@@ -72,9 +72,9 @@ export const login = async (req, res) => {
 		return res
 			.cookie("Authorization", token, {
 				// domain: "mern-authentication-app-frontend.vercel.app",
-				// httpOnly: true,
-				// secure: true,
-				// sameSite: "none",
+				httpOnly: true,
+				secure: true,
+				sameSite: "none",
 			})
 			.status(200)
 			.json({ message: "Logged in successfully" });
@@ -90,9 +90,9 @@ export const logout = async (req, res) => {
 		// Clearing the Authorization cookie
 		res.clearCookie("Authorization", {
 			// domain: "mern-authentication-app-frontend.vercel.app",
-			// httpOnly: true,
-			// secure: true,
-			// sameSite: "none",
+			httpOnly: true,
+			secure: true,
+			sameSite: "none",
 		});
 
 		// Sending a successful logout response
