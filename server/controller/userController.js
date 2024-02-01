@@ -69,6 +69,7 @@ export const login = async (req, res) => {
 		// Sending the Authorization token
 		return res
 			.cookie("Authorization", token, {
+				domain: "mern-authentication-app-frontend.vercel.app",
 				httpOnly: true,
 				secure: true,
 				sameSite: "none",
@@ -86,6 +87,7 @@ export const logout = async (req, res) => {
 	try {
 		// Clearing the Authorization cookie
 		res.clearCookie("Authorization", {
+			domain: "mern-authentication-app-frontend.vercel.app",
 			httpOnly: true,
 			secure: true,
 			sameSite: "none",
