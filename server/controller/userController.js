@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import otpGenerator from "otp-generator";
 import User from "../model/user.model.js";
-import uploadOnCloudinary from "../utils/cloudinary.js"
 
 // POST: http://localhost:8080/user/register
 // body : {
