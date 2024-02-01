@@ -74,7 +74,7 @@ export const login = async (req, res) => {
 				sameSite: "none",
 			})
 			.status(200)
-			.json({ message: "Logged in successfully", token: token });
+			.json({ message: "Logged in successfully" });
 	} catch (error) {
 		// console.log("Error while logging in : ", error);
 		return res.status(400).json({ error: "Error while logging in" });
@@ -192,7 +192,7 @@ export const generateOTP = async (req, res) => {
 		await transporter.sendMail({
 			from: process.env.EMAIL,
 			to: req.session.email,
-			subject: "Password Update",
+			subject: "OTP Verification",
 			html: emailBody,
 		});
 		res.status(200).json({ message: "Email sent successfully" });

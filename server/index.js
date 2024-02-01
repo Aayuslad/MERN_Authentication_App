@@ -3,10 +3,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import connect from "./databse/connection.js"
-import authRoute from './router/authRoute.js';
-import 'dotenv/config'
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import 'dotenv/config'
+import authRoute from './router/authRoute.js';
 const PORT = process.env.PORT || 8080;
 const app = express();
 
@@ -19,7 +19,8 @@ app.set("trust proxy", 1);
 // Middlewares
 app.use(
 	cors({
-		origin: ["http://localhost:5173", "https://mern-authentication-app-frontend.vercel.app"],
+		origin: ["https://mern-authentication-app-frontend.vercel.app"],
+		methods: ["GET", "POST", "PUT"],
 		credentials: true,
 	}),
 );
