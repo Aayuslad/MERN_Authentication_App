@@ -61,6 +61,7 @@ export default function VerifyOTP() {
 										key={index}
 										type="test"
 										maxLength={1}
+										inputMode="numeric"
 										onChange={(e) => handleChange(e, index)}
 										ref={(input) => (inputRef.current[index] = input)}
 										onKeyDown={(e) => handleKeyDown(e, index)}

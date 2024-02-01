@@ -102,6 +102,7 @@ export default function Profile() {
 								<input
 									type="text"
 									placeholder="Contact Number"
+									inputMode="numeric"
 									className="textBox"
 									{...formik.getFieldProps("mobile")}
 								/>
