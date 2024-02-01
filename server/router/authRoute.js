@@ -7,10 +7,10 @@ const router = Router();
 router
 	.post("/register", userController.register) // Register the user
 	.post("/login", userController.login) // Log in to the app
-	.post("/generateOtp", userController.generateOTP); // Generate random OTP
+	.post("/generateOtp", userController.generateOTP) // Generate random OTP
+	.post("/logout", userController.logout); // Log out
 
 router
-	.get("/logout", userController.logout) // Log out
 	.get("/profile", authMiddleware, userController.getUser) // Get user profile by username
 	.get("/verifyOtp", userController.verifyOTP); // Verify the OTP sent to the user's email
 

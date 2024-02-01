@@ -43,7 +43,7 @@ const usersStore = create((set) => ({
 
 	logout: async (navigate) => {
 		try {
-			await toast.promise(axios.get("/user/logout"), {
+			await toast.promise(axios.post("/user/logout"), {
 				pending: "Processing, please wait...",
 				success: "Successfully logged out",
 			});

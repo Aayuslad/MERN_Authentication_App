@@ -84,7 +84,7 @@ export const login = async (req, res) => {
 	}
 };
 
-// GET : http://localhost:8080/user/logout
+// POST : http://localhost:8080/user/logout
 export const logout = async (req, res) => {
 	try {
 		// Clearing the Authorization cookie

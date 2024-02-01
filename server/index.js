@@ -14,7 +14,7 @@ const app = express();
 connect()
 
 // Set trust proxy
-// app.set("trust proxy", 1);
+app.set("trust proxy", 1);
 
 // Middlewares
 app.use(
@@ -27,7 +27,7 @@ app.use(
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan("tiny"))
-// app.disable("x-powerd-by")
+app.disable("x-powerd-by")
 app.use(express.urlencoded({ extended: true }));
 
 // Express session
