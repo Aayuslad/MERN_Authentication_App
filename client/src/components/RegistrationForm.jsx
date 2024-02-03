@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
@@ -10,32 +9,34 @@ import google_logo from "../../public/images/google_logo.png";
 import github_logo from "../../public/images/github_logo.png";
 import password from "../../public/icons/password.svg";
 import usersStore from "../stores/usersStore";
-import convertToBase64 from "../helper/convert";
 
 export default function RegisterForm() {
-	const [file, setFile] = useState();
 	const navigate = useNavigate();
 	const store = usersStore();
 
-	const fromik = useFormik({
+	const formik = useFormik({
 		initialValues: {
 			email: "",
 			username: "",
 			password: "",
+			profile: "",
 		},
 		validate: registerFormValidation,
 		validateOnBlur: false,
 		validateOnChange: false,
 		onSubmit: async (values) => {
-			values = Object.assign(values, { profile: file || "" });
-			store.register(values, navigate);
+			const formData = new FormData();
+			formData.append("email", values.email);
+			formData.append("username", values.username);
+			formData.append("password", values.password);
+			formData.append("profile", values.profile || "");
+			store.register(formData, navigate);
 		},
 	});
 
 	// Function to handle image uplod logic
 	const onUpload = async (e) => {
-		const base64 = await convertToBase64(e.target.files[0]);
-		setFile(base64);
+		formik.setValues({ ...formik.values, profile: e.target.files[0] });
 	};
 
 	return (
@@ -47,10 +48,18 @@ export default function RegisterForm() {
 					<p>Happy to join you</p>
 				</div>
 
-				<form className="form_body" onSubmit={fromik.handleSubmit}>
+				<form className="form_body" onSubmit={formik.handleSubmit}>
 					<div className="profile">
 						<label htmlFor="profile">
-							<img src={file || avatar} alt="avatar" className="profileImg" />
+							<img
+								src={
+									formik.values.profile
+										? URL.createObjectURL(formik.values.profile)
+										: avatar
+								}
+								alt="avatar"
+								className="profileImg"
+							/>
 						</label>
 						<input type="file" name="profile" id="profile" onChange={onUpload} />
 					</div>
@@ -64,7 +73,7 @@ export default function RegisterForm() {
 								type="email"
 								placeholder="email"
 								className="textBox"
-								{...fromik.getFieldProps("email")}
+								{...formik.getFieldProps("email")}
 							/>
 						</div>
 						<div className="input">
@@ -75,7 +84,7 @@ export default function RegisterForm() {
 								type="text"
 								placeholder="Username"
 								className="textBox"
-								{...fromik.getFieldProps("username")}
+								{...formik.getFieldProps("username")}
 							/>
 						</div>
 						<div className="input">
@@ -86,7 +95,7 @@ export default function RegisterForm() {
 								type="password"
 								placeholder="password"
 								className="textBox"
-								{...fromik.getFieldProps("password")}
+								{...formik.getFieldProps("password")}
 							/>
 						</div>
 					</div>

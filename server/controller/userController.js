@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import otpGenerator from "otp-generator";
 import User from "../model/user.model.js";
+import uploadOnCloudinary from "../utils/cloudinary.js";
 
 // POST: http://localhost:8080/user/register
 // body : {
@@ -12,7 +13,9 @@ import User from "../model/user.model.js";
 //   "profile": ""
 // }
 export const register = async (req, res) => {
-	const { username, password, email, profile } = req.body;
+	const { username, password, email } = req.body;
+	let secureUrl = "";
+	let publicId = "";
 
 	try {
 		// Check if the username already exists
@@ -23,12 +26,17 @@ export const register = async (req, res) => {
 		const userByEmail = await User.findOne({ email });
 		if (userByEmail) return res.status(400).json({ error: "User already exists with this email" });
 
+		// Uploading image on cloudinary
+		const response = await uploadOnCloudinary(req.file?.path);
+		secureUrl = response?.secure_url;
+		publicId = response?.public_id;
+
 		// Hashing password
 		const salt = await bcrypt.genSalt(10);
 		const hashedPassword = await bcrypt.hash(password, salt);
 
 		// creating new user
-		await User.create({ username, password: hashedPassword, email, profile });
+		await User.create({ username, password: hashedPassword, email, profile: secureUrl, publicId });
 		res.status(201).json({
 			message: "Successfully registered",
 		});
@@ -131,14 +139,24 @@ export const getUser = async (req, res) => {
 // }
 export const updateUser = async (req, res) => {
 	const { user_Id } = req.user;
-	const { firstName, lastName, address, mobile, profile } = req.body;
+	const { firstName, lastName, address, mobile } = req.body;
+	let secureUrl = "";
+	let publicId = "";
 
 	try {
+		// updating profile pic on cloudinary
+		const response = await uploadOnCloudinary(req.file?.path);
+		secureUrl = response?.secure_url;
+		publicId = response?.public_id;
+
 		// Finding the user by user id and updating fields
-		await User.updateOne({ _id: user_Id }, { firstName, lastName, address, mobile, profile });
+		await User.updateOne(
+			{ _id: user_Id },
+			{ firstName, lastName, address, mobile, profile: secureUrl, publicId },  
+		);
 		return res.status(200).json({ message: "User updated successfully" });
 	} catch (error) {
-		// console.log("Error while updating user : ", error);
+		console.log("Error while updating user : ", error);
 		return res.status(400).json({ error: "User not updated" });
 	}
 };
@@ -199,6 +217,7 @@ export const generateOTP = async (req, res) => {
 			subject: "OTP Verification",
 			html: emailBody,
 		});
+		console.log(req.session);
 		res.status(200).json({ message: "Email sent successfully" });
 	} catch (error) {
 		// console.log("Error while sending email : ", error);

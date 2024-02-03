@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
 	mobile: Number,
 	address: String,
 	profile: String,
+	publicId: String,
 });
 
 

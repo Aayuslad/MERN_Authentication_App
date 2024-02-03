@@ -1,11 +1,12 @@
 import { Router } from "express";
 import * as userController from "../controller/userController.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
+import { upload } from "../middlewares/multerMiddleware.js"
 
 const router = Router();
 
 router
-	.post("/register", userController.register) // Register the user
+	.post("/register", upload.single("profile"), userController.register) // Register the user
 	.post("/login", userController.login) // Log in to the app
 	.post("/generateOtp", userController.generateOTP) // Generate random OTP
 	.post("/logout", userController.logout); // Log out
@@ -15,7 +16,7 @@ router
 	.get("/verifyOtp", userController.verifyOTP); // Verify the OTP sent to the user's email
 
 router
-	.put("/updateUser", authMiddleware, userController.updateUser) // Update user profile
+	.put("/updateUser", upload.single("profile"), authMiddleware, userController.updateUser) // Update user profile
 	.put("/resetPassword", userController.resetPassword); // Reset the password
 
 export default router;

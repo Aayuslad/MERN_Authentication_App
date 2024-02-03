@@ -4,17 +4,18 @@ import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { profileUpdateValidation } from "../helper/validate";
 import avatar from "../../public/images/profile.png";
-import user from "../../public/icons/user.svg"
-import email from "../../public/icons/email.svg"
-import address from "../../public/icons/address.svg"
-import phone from "../../public/icons/phone.svg"
+import user from "../../public/icons/user.svg";
+import email from "../../public/icons/email.svg";
+import address from "../../public/icons/address.svg";
+import phone from "../../public/icons/phone.svg";
 import usersStore from "../stores/usersStore";
-import convertToBase64 from "../helper/convert";
 import LoadingPage from "../pages/LoadingPage";
+import { useState } from "react";
 
 export default function Profile() {
 	const navigate = useNavigate();
 	const store = usersStore();
+	const [profile, setProfile] = useState(avatar);
 
 	const formik = useFormik({
 		initialValues: {
@@ -23,29 +24,37 @@ export default function Profile() {
 			email: "",
 			address: "",
 			profile: "",
-			mobile: undefined,
+			mobile: "",
 		},
 		validate: profileUpdateValidation,
 		validateOnBlur: false,
 		validateOnChange: false,
 		onSubmit: async (values) => {
-			store.updateUserDetails(values);
+			const formData = new FormData();
+			formData.append("firstName", values.firstName || "");
+			formData.append("lastName", values.lastName || "");
+			formData.append("email", values.email || "");
+			formData.append("address", values.address || "");
+			formData.append("profile", values.profile || "");
+			formData.append("mobile", values.mobile || "");
+			store.updateUserDetails(formData);
 		},
 	});
-
-	// Function to handle image uplod logic
-	const onUpload = async (e) => {
-		const base64 = await convertToBase64(e.target.files[0]);
-		formik.setValues({ ...formik.values, profile: base64 });
-	};
 
 	useEffect(() => {
 		async function data() {
 			const data = await store.getUserDetails(navigate);
+			console.log(data);
 			formik.setValues(data);
+			if (data.profile) setProfile(data.profile);
 		}
 		data();
 	}, []);
+
+	const onUpload = async (e) => {
+		formik.setValues({ ...formik.values, profile: e.target.files[0] });
+		setProfile(URL.createObjectURL(e.target.files[0]));
+	};
 
 	if (store.isLoading === true) {
 		return <LoadingPage />;
@@ -63,7 +72,7 @@ export default function Profile() {
 				<form className="form_body" onSubmit={formik.handleSubmit}>
 					<div className="profile">
 						<label htmlFor="profile">
-							<img src={formik.values.profile || avatar} alt="avatar" className="profileImg" />
+							<img src={profile} alt="avatar" className="profileImg" />
 						</label>
 						<input type="file" name="profile" id="profile" onChange={onUpload} />
 					</div>

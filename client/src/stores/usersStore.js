@@ -7,9 +7,9 @@ const usersStore = create((set) => ({
 	verificationEmail: "",
 	isLoading: false,
 
-	register: async (values, navigate) => {
+	register: async (formData, navigate) => {
 		try {
-			const res = await toast.promise(axios.post("/user/register", values), {
+			const res = await toast.promise(axios.post("/user/register", formData), {
 				pending: "Processing, please wait...",
 				success: "Successfully registered",
 			});
@@ -72,9 +72,9 @@ const usersStore = create((set) => ({
 		}
 	},
 
-	updateUserDetails: async (values) => {
+	updateUserDetails: async (formData) => {
 		try {
-			await toast.promise(axios.put("/user/updateUser", values), {
+			await toast.promise(axios.put("/user/updateUser", formData), {
 				pending: "Updating user data...",
 				success: "User updated successfully",
 			});
