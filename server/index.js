@@ -53,6 +53,7 @@ app.use(
 app.get("/", (req, res) => {
 	res.json({ message: "Server is started 😊" });
 });
+
 app.use("/user", authRoute)
 
 // listning requests
