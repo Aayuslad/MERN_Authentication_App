@@ -19,7 +19,7 @@ app.set("trust proxy", 1);
 // Middlewares
 app.use(
 	cors({
-		origin: ["https://mern-authentication-app-frontend.vercel.app", "http://localhost:5173"],
+		origin: ["https://mern-authentication-app-frontend.vercel.app"],
 		methods: ["GET", "POST", "PUT"],
 		credentials: true,
 	}),
