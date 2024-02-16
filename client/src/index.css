@@ -366,7 +366,7 @@ input[type="file"] {
 	.ForgotPasswordPage .glass,
 	.ResetPasswordPage .glass,
 	.VerifyOTPPage .glass {
-		padding-bottom: 300px;
+		padding-top: 10vh;
 	}
 
 	.ForgotPasswordPage .glass h2, .VerifyOTPPage .glass h2 {
@@ -400,9 +400,9 @@ input[type="file"] {
 		margin-bottom: 0;
 	}
 
-	.form_body .inputs .row {
+	.ProfilePage .form_body .inputs .row {
 		flex-direction: column;
-		gap: 10px;
+		gap: 0;
 	}
 
 	.ProfilePage .form_body .inputs {
