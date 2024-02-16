@@ -145,14 +145,15 @@ export const updateUser = async (req, res) => {
 
 	try {
 		// updating profile pic on cloudinary
-		const response = await uploadOnCloudinary(req.file?.path);
+		const user = await User.findOne({ _id: user_Id });
+		const response = await uploadOnCloudinary(req.file?.path, user.publicId);
 		secureUrl = response?.secure_url;
 		publicId = response?.public_id;
 
 		// Finding the user by user id and updating fields
 		await User.updateOne(
 			{ _id: user_Id },
-			{ firstName, lastName, address, mobile, profile: secureUrl, publicId },  
+			{ firstName, lastName, address, mobile, profile: secureUrl, publicId },
 		);
 		return res.status(200).json({ message: "User updated successfully" });
 	} catch (error) {
