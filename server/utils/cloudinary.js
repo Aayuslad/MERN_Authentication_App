@@ -8,10 +8,15 @@ cloudinary.config({
 	api_secret: process.env.API_SECRET,
 });
 
-const uploadOnCloudinary = async (localFilePath) => {
+const uploadOnCloudinary = async (localFilePath, oldPublicId) => {
 	try {
 		// Cheking if file exist or not in server
 		if (!localFilePath) return null;
+
+		// If oldPublicId exists, delete the old image
+		if (oldPublicId) {
+			await cloudinary.uploader.destroy(oldPublicId);
+		}
 
 		// Uploading file on cloud
 		const res = await cloudinary.uploader.upload(localFilePath, {
