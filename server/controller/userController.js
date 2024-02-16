@@ -257,7 +257,12 @@ export const resetPassword = async (req, res) => {
 		await User.updateOne({ email: req.session.email }, { password: hashedPassword });
 		req.session.resetSession = false;
 		req.session.email = "";
-		res.clearCookie("connect.sid");
+		res.clearCookie("connect.sid", {
+			maxAge: 5 * 60 * 1000, // 5 minutes
+			secure: true,
+			httpOnly: true,
+			sameSite: "none",
+		});
 
 		return res.status(200).json({ message: "Password updated successfully" });
 	} catch (error) {
