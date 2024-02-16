@@ -218,7 +218,6 @@ export const generateOTP = async (req, res) => {
 			subject: "OTP Verification",
 			html: emailBody,
 		});
-		console.log(req.session);
 		res.status(200).json({ message: "Email sent successfully" });
 	} catch (error) {
 		// console.log("Error while sending email : ", error);
@@ -258,7 +257,7 @@ export const resetPassword = async (req, res) => {
 		await User.updateOne({ email: req.session.email }, { password: hashedPassword });
 		req.session.resetSession = false;
 		req.session.email = "";
-		req.session.destroy();
+		res.clearCookie("connect.sid");
 
 		return res.status(200).json({ message: "Password updated successfully" });
 	} catch (error) {
