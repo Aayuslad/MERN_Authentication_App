@@ -19,7 +19,7 @@ app.set("trust proxy", 1);
 // Middlewares
 app.use(
 	cors({
-		origin: ["https://mern-authentication-app-frontend.vercel.app"],
+		origin: ["https://mern-authentication-app-frontend.vercel.app", "http://localhost:5173"],
 		methods: ["GET", "POST", "PUT"],
 		credentials: true,
 	}),
@@ -42,9 +42,9 @@ app.use(
 			autoRemoveInterval: 5, // In minutes. Default
 		}),
 		cookie: {
-			secure: true,
-			httpOnly: true,
-			sameSite: "none",
+			// secure: true,
+			// httpOnly: true,
+			// sameSite: "none",
 		},
 	}),
 ); 
