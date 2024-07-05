@@ -3,19 +3,23 @@ import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { loginFormValidation } from "../helper/validate";
 import user from "../../public/icons/user.svg";
-import password from "../../public/icons/password.svg"
+import password from "../../public/icons/password.svg";
 import google_logo from "../../public/images/google_logo.png";
 import github_logo from "../../public/images/github_logo.png";
 import usersStore from "../stores/usersStore.js";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useEffect, useState } from "react";
 
 export default function LoginForm() {
 	const navigate = useNavigate();
 	const store = usersStore();
+	const [token, setToken] = useState("");
 
 	const fromik = useFormik({
 		initialValues: {
 			username: "",
 			password: "",
+			token: "",
 		},
 		validate: loginFormValidation,
 		validateOnBlur: false,
@@ -24,6 +28,12 @@ export default function LoginForm() {
 			store.login(values, navigate);
 		},
 	});
+
+	useEffect(() => {
+		if (token) {
+			fromik.setFieldValue("token", token);
+		}
+	}, [token]);
 
 	return (
 		<div className="LoginPage">
@@ -61,6 +71,13 @@ export default function LoginForm() {
 						<Link className="link link-password" to="/forgotpassword">
 							Forgot Password ?
 						</Link>
+
+						<ReCAPTCHA
+							sitekey="6LcBOgkqAAAAAAm9dE9FX7f4ehI1PA_YK4-eTHQH"
+							onChange={(token) => {
+								setToken(token);
+							}}
+						/>
 					</div>
 
 					<div className="buttons">

@@ -52,9 +52,23 @@ export const register = async (req, res) => {
 //   "password": "admin123"
 // }
 export const login = async (req, res) => {
-	const { username, password } = req.body;
+	const { username, password, token } = req.body;
+
+	console.log(process.env.RECAPTCHA_SECRET_KEY);
+
+	const formData = new FormData();
+	formData.append("secret", process.env.RECAPTCHA_SECRET_KEY);
+	formData.append("response", token);
 
 	try {
+		const captcha = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+			method: "POST",
+			body: formData,
+		});
+
+		const captchaResult = await captcha.json();
+		if (captchaResult.success === false) return res.status(401).json({ error: "Captcha Failed" });
+
 		// Checking if a user exists with this username
 		const user = await User.findOne({ username });
 		if (!user) return res.status(404).json({ error: "Username does not exist" });
@@ -64,7 +78,7 @@ export const login = async (req, res) => {
 		if (!passwordCheck) return res.status(401).json({ error: "Incorrect password" });
 
 		// Creating an Authorization token
-		const token = jwt.sign(
+		const jwtToken = jwt.sign(
 			{
 				user_Id: user._id,
 				username: user.username,
@@ -78,7 +92,7 @@ export const login = async (req, res) => {
 
 		// Sending the Authorization token
 		return res
-			.cookie("Authorization", token, {
+			.cookie("Authorization", jwtToken, {
 				// domain: "mern-authentication-app-frontend.vercel.app",
 				httpOnly: true,
 				secure: true,
@@ -87,7 +101,7 @@ export const login = async (req, res) => {
 			.status(200)
 			.json({ message: "Logged in successfully" });
 	} catch (error) {
-		// console.log("Error while logging in : ", error);
+		console.log("Error while logging in : ", error);
 		return res.status(400).json({ error: "Error while logging in" });
 	}
 };
