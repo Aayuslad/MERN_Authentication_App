@@ -54,8 +54,6 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
 	const { username, password, token } = req.body;
 
-	console.log(req.body);
-
 	const formData = new FormData();
 	formData.append("secret", process.env.RECAPTCHA_SECRET_KEY);
 	formData.append("response", token);
