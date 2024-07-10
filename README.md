@@ -2,7 +2,7 @@
 
 MERN_Authentication_App is a full-stack web application that provides authentication functionalities including user registration, login, profile management, and password reset via OTP verification to email. This project also includes Google reCAPTCHA to enhance security during the registration and login processes.
 
-## Live Link - [[here](https://mern-authentication-app-frontend.vercel.app)](https://mern-authentication-app-frontend.vercel.app).
+## Live Link - [https://mern-authentication-app-frontend.vercel.app](https://mern-authentication-app-frontend.vercel.app).
 
 ## Table of Contents
 - [Features](#features)
