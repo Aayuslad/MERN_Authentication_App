@@ -8,7 +8,6 @@ MERN_Authentication_App is a full-stack web application that provides authentica
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Installation](#installation)
-- [Environment Variables](#environment-variables)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
