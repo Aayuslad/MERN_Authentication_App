@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { registerFormValidation } from "../helper/validate";
@@ -9,10 +10,12 @@ import google_logo from "../../public/images/google_logo.png";
 import github_logo from "../../public/images/github_logo.png";
 import password from "../../public/icons/password.svg";
 import usersStore from "../stores/usersStore";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function RegisterForm() {
 	const navigate = useNavigate();
 	const store = usersStore();
+	const [token, setToken] = useState("");
 
 	const formik = useFormik({
 		initialValues: {
@@ -20,6 +23,7 @@ export default function RegisterForm() {
 			username: "",
 			password: "",
 			profile: "",
+			token: "",
 		},
 		validate: registerFormValidation,
 		validateOnBlur: false,
@@ -30,9 +34,16 @@ export default function RegisterForm() {
 			formData.append("username", values.username);
 			formData.append("password", values.password);
 			formData.append("profile", values.profile || "");
+			formData.append("token", values.token);
 			store.register(formData, navigate);
 		},
 	});
+
+	useEffect(() => {
+		if (token) {
+			formik.setFieldValue("token", token);
+		}
+	}, [token]);
 
 	// Function to handle image uplod logic
 	const onUpload = async (e) => {
@@ -98,6 +109,13 @@ export default function RegisterForm() {
 								{...formik.getFieldProps("password")}
 							/>
 						</div>
+
+						<ReCAPTCHA
+							sitekey="6LcBOgkqAAAAAAm9dE9FX7f4ehI1PA_YK4-eTHQH"
+							onChange={(token) => {
+								setToken(token);
+							}}
+						/>
 					</div>
 
 					<div className="buttons">

@@ -13,7 +13,7 @@ export async function registerFormValidation(values) {
 
 // validating login form
 export async function loginFormValidation(values) {
-	const error = usernameVerify({}, values);
+	const error = usernameOrEmailVerify({}, values);
 	if (error.username) return error;
 	passwordVerify(error, values);
 
@@ -96,6 +96,17 @@ function usernameVerify(error = {}, values) {
 		error.username = toast.error("Username required");
 	} else if (values.username.includes(" ")) {
 		error.username = toast.error("Invalid username");
+	}
+
+	return error;
+}
+
+// validate username
+function usernameOrEmailVerify(error = {}, values) {
+	if (!values.usernameOrEmail) {
+		error.usernameOrEmail = toast.error("Username or email required");
+	} else if (values.usernameOrEmail.includes(" ")) {
+		error.usernameOrEmail = toast.error("Invalid username or email");
 	}
 
 	return error;

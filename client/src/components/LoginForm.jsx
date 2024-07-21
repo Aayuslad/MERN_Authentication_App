@@ -15,9 +15,9 @@ export default function LoginForm() {
 	const store = usersStore();
 	const [token, setToken] = useState("");
 
-	const fromik = useFormik({
+	const formik = useFormik({
 		initialValues: {
-			username: "",
+			usernameOrEmail: "",
 			password: "",
 			token: "",
 		},
@@ -25,13 +25,14 @@ export default function LoginForm() {
 		validateOnBlur: false,
 		validateOnChange: false,
 		onSubmit: async (values) => {
+			console.log(values);
 			store.login(values, navigate);
 		},
 	});
 
 	useEffect(() => {
 		if (token) {
-			fromik.setFieldValue("token", token);
+			formik.setFieldValue("token", token);
 		}
 	}, [token]);
 
@@ -44,7 +45,7 @@ export default function LoginForm() {
 					<p>Explore more by connecting with us !</p>
 				</div>
 
-				<form className="form_body" onSubmit={fromik.handleSubmit}>
+				<form className="form_body" onSubmit={formik.handleSubmit}>
 					<div className="inputs">
 						<div className="input">
 							<div className="icon">
@@ -52,9 +53,9 @@ export default function LoginForm() {
 							</div>
 							<input
 								type="text"
-								placeholder="Username"
+								placeholder="username or email"
 								className="textBox"
-								{...fromik.getFieldProps("username")}
+								{...formik.getFieldProps("usernameOrEmail")}
 							/>
 						</div>
 						<div className="input">
@@ -65,7 +66,7 @@ export default function LoginForm() {
 								type="password"
 								placeholder="password"
 								className="textBox"
-								{...fromik.getFieldProps("password")}
+								{...formik.getFieldProps("password")}
 							/>
 						</div>
 						<Link className="link link-password" to="/forgotpassword">

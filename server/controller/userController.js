@@ -11,13 +11,28 @@ import uploadOnCloudinary from "../utils/cloudinary.js";
 //   "password" : "admin123",
 //   "email": "example@gmail.com",
 //   "profile": ""
+//   "token": ""
 // }
 export const register = async (req, res) => {
-	const { username, password, email } = req.body;
+	const { username, password, email, token } = req.body;
 	let secureUrl = "";
 	let publicId = "";
 
+	const formData = new FormData();
+	formData.append("secret", process.env.RECAPTCHA_SECRET_KEY);
+	formData.append("response", token);
+
 	try {
+		const captcha = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+			method: "POST",
+			body: formData,
+		});
+
+		const captchaResult = await captcha.json();
+		if (captchaResult.success === false) {
+			return res.status(401).json({ error: "Captcha Failed" });
+		}
+
 		// Check if the username already exists
 		const userByUsername = await User.findOne({ username });
 		if (userByUsername) return res.status(400).json({ error: "Username alredy exists" });
@@ -48,11 +63,12 @@ export const register = async (req, res) => {
 
 // POST: http://localhost:8080/user/login
 // Body: {
-//   "username": "example123",
-//   "password": "admin123"
+//   "usernameOrEmail": "example123",
+//   "password": "admin123",
+//   "token": ""
 // }
 export const login = async (req, res) => {
-	const { username, password, token } = req.body;
+	const { usernameOrEmail, password, token } = req.body;
 
 	const formData = new FormData();
 	formData.append("secret", process.env.RECAPTCHA_SECRET_KEY);
@@ -65,11 +81,13 @@ export const login = async (req, res) => {
 		});
 
 		const captchaResult = await captcha.json();
-		if (captchaResult.success === false) return res.status(401).json({ error: "Captcha Failed" });
+		if (captchaResult.success === false) {
+			return res.status(401).json({ error: "Captcha Failed" });
+		}
 
-		// Checking if a user exists with this username
-		const user = await User.findOne({ username });
-		if (!user) return res.status(404).json({ error: "Username does not exist" });
+		// Checking if a user exists with this username or email
+		const user = await User.findOne({ $or: [{ usernameOrEmail }, { email: usernameOrEmail }] });
+		if (!user) return res.status(404).json({ error: "Ussername Or email does not exist" });
 
 		// Checking the password
 		const passwordCheck = await bcrypt.compare(password, user.password);
@@ -79,7 +97,7 @@ export const login = async (req, res) => {
 		const jwtToken = jwt.sign(
 			{
 				user_Id: user._id,
-				username: user.username,
+				username: user.usernameOrEmail,
 				email: user.email,
 			},
 			process.env.SECRET,

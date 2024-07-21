@@ -20,7 +20,7 @@ const usersStore = create((set) => ({
 				if (error.response.status === 413) {
 					return toast.error("The document is too large");
 				}
-				toast.error(error.response.data.error);
+				return toast.error(error.response.data.error);
 			}
 			toast.error("Error while registration");
 		}
