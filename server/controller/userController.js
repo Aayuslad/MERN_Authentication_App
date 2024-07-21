@@ -86,7 +86,7 @@ export const login = async (req, res) => {
 		}
 
 		// Checking if a user exists with this username or email
-		const user = await User.findOne({ $or: [{ usernameOrEmail }, { email: usernameOrEmail }] });
+		const user = await User.findOne({ $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }] });
 		if (!user) return res.status(404).json({ error: "Ussername Or email does not exist" });
 
 		// Checking the password
