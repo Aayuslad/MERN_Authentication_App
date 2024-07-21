@@ -16,7 +16,7 @@ export default function Profile() {
 	const navigate = useNavigate();
 	const store = usersStore();
 	const [profile, setProfile] = useState(avatar);
-
+	
 	const formik = useFormik({
 		initialValues: {
 			firstName: "",

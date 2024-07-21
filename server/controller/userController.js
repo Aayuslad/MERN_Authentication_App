@@ -97,8 +97,7 @@ export const login = async (req, res) => {
 		const jwtToken = jwt.sign(
 			{
 				user_Id: user._id,
-				username: user.usernameOrEmail,
-				email: user.email,
+				usernameOrEmail: usernameOrEmail,
 			},
 			process.env.SECRET,
 			{
@@ -143,18 +142,18 @@ export const logout = async (req, res) => {
 
 // GET: http://localhost:8080/user/profile
 export const getUser = async (req, res) => {
-	const { username } = req.user;
+	const { user_Id } = req.user;
 
 	try {
 		// Checking if a user exists with this username
-		let user = await User.findOne({ username }).lean();
+		const user = await User.findOne({ _id: user_Id });
 		if (!user) return res.status(404).json({ error: "Username does not exist" });
 
 		// Returning user info after removing the password
 		delete user.password;
 		return res.status(200).json(user);
 	} catch (error) {
-		// console.log("Error while finding user : ", error);
+		console.log("Error while finding user : ", error);
 		return res.status(404).json({ error: "User not found" });
 	}
 };
